@@ -45,11 +45,11 @@ extension RappleActivityIndicatorView {
             }
             backgroundView?.alpha = 1.0
             backgroundView?.isUserInteractionEnabled = false
-            keyWindow.addSubview(backgroundView!)
+            keyWindow?.addSubview(backgroundView!)
             
             let dic = ["BG": backgroundView!]
-            keyWindow.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[BG]|", options: .alignAllCenterY, metrics: nil, views: dic))
-            keyWindow.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[BG]|", options: .alignAllCenterX, metrics: nil, views: dic))
+            keyWindow?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[BG]|", options: .alignAllCenterY, metrics: nil, views: dic))
+            keyWindow?.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[BG]|", options: .alignAllCenterX, metrics: nil, views: dic))
         }
     }
     
@@ -75,7 +75,7 @@ extension RappleActivityIndicatorView {
         let h = 45 + size.height
         let sqHeight: CGFloat = h + 20
         let cd = 24 + size.height - (h / 2)
-        var c = keyWindow.center; c.y -= cd
+        var c = keyWindow?.center; c?.y -= cd
         
         // add activity indicator
         activityIndicator = UIActivityIndicatorView(style: .whiteLarge)
@@ -83,17 +83,17 @@ extension RappleActivityIndicatorView {
         activityIndicator?.startAnimating()
         backgroundView?.addSubview(activityIndicator!)
         if showProgress == false {
-            activityIndicator?.center = c
+            activityIndicator?.center = c ?? CGPoint(x: 0, y: 0)
             sqWidth = size.width + 20
             if sqWidth < 55 { sqWidth = 55; }
         } else {
-            var newc = c; newc.x -= 100
-            activityIndicator?.center = newc
+            var newc = c; newc?.x -= 100
+            activityIndicator?.center = newc ?? CGPoint(x: 0, y: 0)
             sqWidth = 260
             
             progressBar = UIProgressView(progressViewStyle: .bar)
             progressBar?.frame = CGRect(x: 0, y: 0, width: 180, height: 4)
-            progressBar?.center = CGPoint(x: c.x + 22, y: newc.y + 10)
+            progressBar?.center = CGPoint(x: c?.x ?? 0 + 22, y: newc?.y ?? 0 + 10)
             progressBar?.trackTintColor = getColor(key: RappleProgressBarColorKey)
             progressBar?.progressTintColor = getColor(key: RappleProgressBarFillColorKey)
             backgroundView?.addSubview(progressBar!)
@@ -110,8 +110,8 @@ extension RappleActivityIndicatorView {
         
         // add label and size
         activityLable = UILabel(frame: CGRect(x: 0, y: 0, width: size.width+1, height: size.height+1))
-        let x = keyWindow.center.x
-        let y = keyWindow.center.y - (size.height / 2) + (h / 2)
+        let x = keyWindow?.center.x ?? 0
+        let y = (keyWindow?.center.y ?? 0) - (size.height / 2) + (h / 2)
         activityLable?.center = CGPoint(x: x, y: y)
         activityLable?.font = UIFont.systemFont(ofSize: 16)
         activityLable?.textColor = getColor(key: RappleTintColorKey)
@@ -126,7 +126,7 @@ extension RappleActivityIndicatorView {
         contentSqure?.backgroundColor = getColor(key: RappleProgressBGColorKey)
         contentSqure?.layer.cornerRadius = 10.0
         contentSqure?.layer.masksToBounds = true
-        contentSqure?.center = keyWindow.center
+        contentSqure?.center = keyWindow?.center ?? CGPoint(x: 0, y: 0)
         backgroundView?.addSubview(contentSqure!)
         backgroundView?.sendSubviewToBack(contentSqure!)
         
@@ -144,8 +144,8 @@ extension RappleActivityIndicatorView {
             addProgresCircle(currentProgress, pgText: "")
         }
         activityLable = UILabel(frame: CGRect(x: 0, y: 0, width: size.width+1, height: size.height+1))
-        let x = keyWindow.center.x
-        let y = yi + (size.height / 2)
+        let x = keyWindow?.center.x ?? 0
+        let y = (yi + (size.height / 2)) ?? 0
         activityLable?.center = CGPoint(x: x, y: y)
         activityLable?.textColor = getColor(key: RappleTintColorKey)
         activityLable?.font = UIFont.systemFont(ofSize: 16)
@@ -161,9 +161,9 @@ extension RappleActivityIndicatorView {
         // add label and size
         let size = calcTextSize(textLabel)
         activityLable = UILabel(frame: CGRect(x: 0, y: 0, width: size.width+1, height: size.height+1))
-        let x = keyWindow.center.x
-        let y = keyWindow.center.y
-        activityLable?.center = CGPoint(x: x, y: y)
+        let x = keyWindow?.center.x
+        let y = keyWindow?.center.y
+        activityLable?.center = CGPoint(x: x ?? 0, y: y ?? 0)
         activityLable?.font = UIFont.systemFont(ofSize: 16)
         activityLable?.textColor = getColor(key: RappleTintColorKey)
         activityLable?.textAlignment = .center
@@ -215,20 +215,20 @@ extension RappleActivityIndicatorView {
         let h = (2 * r) + size.height + 10
         let cd = (h - size.height - 10) / 2
         
-        var center = keyWindow.center; center.y -= cd
+        var center = keyWindow?.center; center?.y -= cd
         
-        let circle1 = UIBezierPath(arcCenter: center, radius: r, startAngle: -CGFloat(Double.pi/2), endAngle:CGFloat(3 * Double.pi/2), clockwise: true)
+        let circle1 = UIBezierPath(arcCenter: center ?? CGPoint(x: 0, y: 0), radius: r, startAngle: -CGFloat(Double.pi/2), endAngle:CGFloat(3 * Double.pi/2), clockwise: true)
         circularActivity1 = rotatingCircle(circle: circle1)
         
         if twoSided == true {
-            let circle2 = UIBezierPath(arcCenter: center, radius: r, startAngle: CGFloat(Double.pi/2), endAngle:CGFloat(5 * Double.pi/2), clockwise: true)
+            let circle2 = UIBezierPath(arcCenter: center ?? CGPoint(x: 0, y: 0), radius: r, startAngle: CGFloat(Double.pi/2), endAngle:CGFloat(5 * Double.pi/2), clockwise: true)
             circularActivity2 = rotatingCircle(circle: circle2)
         }
-        completionPoint = center
+        completionPoint = center ?? CGPoint(x: 0, y: 0)
         completionRadius = (showProgress == true) ? r - 5 : r
         completionWidth = getThickness()
         
-        return center.y + r + 10
+        return (center?.y ?? 0) + r + 10
     }
     
     /** create circular path with UIBezierPath */
@@ -278,8 +278,8 @@ extension RappleActivityIndicatorView {
             let h = 2 * r + size.height + 10
             let cd = (h - size.height - 10) / 2
             
-            var center = keyWindow.center; center.y -= cd
-            let circle = UIBezierPath(arcCenter: center, radius: (r - 5), startAngle: -CGFloat(Double.pi/2), endAngle:CGFloat(Double.pi * 1.5), clockwise: true)
+            var center = keyWindow?.center; center?.y -= cd
+            let circle = UIBezierPath(arcCenter: center ?? CGPoint(x: 0, y: 0), radius: (r - 5), startAngle: -CGFloat(Double.pi/2), endAngle:CGFloat(Double.pi * 1.5), clockwise: true)
             
             progressLayerBG = CAShapeLayer()
             progressLayerBG?.path = circle.cgPath
@@ -297,7 +297,7 @@ extension RappleActivityIndicatorView {
             
             let w = (r * 2) - 10
             progressLabel = UILabel(frame: CGRect(x: 0, y: 0, width: w, height: w))
-            progressLabel?.center = center
+            progressLabel?.center = center ?? CGPoint(x: 0, y: 0)
             progressLabel?.textColor = getColor(key: RappleTintColorKey)
             progressLabel?.textAlignment = .center
             progressLabel?.numberOfLines = 0
